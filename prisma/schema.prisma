@@ -1,0 +1,53 @@
+// Prisma Schema for Expense Tracker
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Category model - predefined expense categories
+model Category {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  icon      String    // Icon name from lucide-react
+  color     String    // Hex color code
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  expenses  Expense[]
+
+  @@index([name])
+}
+
+// Expense model - individual expense entries
+model Expense {
+  id         String   @id @default(uuid())
+  amount     Float
+  description String?
+  date       DateTime @default(now())
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([date])
+  @@index([categoryId])
+  @@index([date, categoryId])
+}
+
+// Monthly Summary model - aggregated monthly data for quick access
+model MonthlySummary {
+  id            String   @id @default(uuid())
+  month         Int      // 1-12
+  year          Int
+  totalSpending Float
+  categoryData  Json     // Store category-wise breakdown as JSON
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([month, year])
+  @@index([year, month])
+}

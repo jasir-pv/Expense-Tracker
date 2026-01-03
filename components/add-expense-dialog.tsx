@@ -51,8 +51,8 @@ export function AddExpenseDialog({ categories }: AddExpenseDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="lg" className="rounded-full w-14 h-14 shadow-lg">
-          <Plus className="w-6 h-6" />
+        <Button size="icon" className="bg-gradient-to-br from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 shadow-md">
+          <Plus className="w-5 h-5" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

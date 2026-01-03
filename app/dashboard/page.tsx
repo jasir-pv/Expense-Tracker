@@ -1,10 +1,11 @@
 import { Suspense } from 'react';
-import { Menu, Bell, User, TrendingUp, ArrowRight } from 'lucide-react';
+import { Bell, User, TrendingUp, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { CategoryCard } from '@/components/category-card';
 import { TransactionItem } from '@/components/transaction-item';
 import { AddExpenseDialog } from '@/components/add-expense-dialog';
 import { AddCategoryDialog } from '@/components/add-category-dialog';
+import { NavigationMenu } from '@/components/navigation-menu';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -36,10 +37,9 @@ async function DashboardContent() {
       {/* Header */}
       <header className="bg-white border-b p-4">
         <div className="max-w-md mx-auto flex items-center justify-between">
-          <Button variant="ghost" size="icon">
-            <Menu className="w-6 h-6" />
-          </Button>
+          <NavigationMenu />
           <div className="flex items-center gap-2">
+            <AddExpenseDialog categories={categories} />
             <Button variant="ghost" size="icon">
               <Bell className="w-5 h-5" />
             </Button>
@@ -50,7 +50,7 @@ async function DashboardContent() {
         </div>
       </header>
 
-      <div className="max-w-md mx-auto p-4 pb-24 space-y-6">
+      <div className="max-w-md mx-auto p-4 space-y-6">
         {/* Balance Card */}
         <Card className="p-6 bg-gradient-to-br from-blue-500 to-purple-600 text-white border-none">
           <p className="text-sm opacity-90 mb-1">Main balance</p>
@@ -137,13 +137,6 @@ async function DashboardContent() {
               </div>
             )}
           </Card>
-        </div>
-      </div>
-
-      {/* Bottom Action Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4">
-        <div className="max-w-md mx-auto flex items-center justify-center gap-4">
-          <AddExpenseDialog categories={categories} />
         </div>
       </div>
     </div>

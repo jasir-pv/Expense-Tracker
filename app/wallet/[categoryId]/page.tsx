@@ -144,14 +144,16 @@ async function WalletDetailsContent({ categoryId }: { categoryId: string }) {
   );
 }
 
-export default function WalletDetailsPage({
+export default async function WalletDetailsPage({
   params,
 }: {
-  params: { categoryId: string };
+  params: Promise<{ categoryId: string }>;
 }) {
+  const { categoryId } = await params;
+
   return (
     <Suspense fallback={<div className="min-h-screen bg-gray-50" />}>
-      <WalletDetailsContent categoryId={params.categoryId} />
+      <WalletDetailsContent categoryId={categoryId} />
     </Suspense>
   );
 }

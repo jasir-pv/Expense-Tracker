@@ -57,6 +57,11 @@ async function main() {
       icon: 'Receipt',
       color: '#F59E0B', // Amber
     },
+    {
+      name: 'Turf',
+      icon: 'CircleDot',
+      color: '#22C55E', // Green
+    },
   ];
 
   for (const category of categories) {

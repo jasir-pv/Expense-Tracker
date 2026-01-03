@@ -1,6 +1,7 @@
 'use server';
 
 import { prisma } from '@/lib/db';
+import { revalidatePath } from 'next/cache';
 
 export async function getCategories() {
   return await prisma.category.findMany({
@@ -55,4 +56,34 @@ export async function getCategorySpending() {
       percentage: totalSpending > 0 ? (amount / totalSpending) * 100 : 0,
     };
   }).filter(cat => cat.amount > 0);
+}
+
+export async function createCategory(formData: FormData) {
+  const name = formData.get('name') as string;
+  const icon = formData.get('icon') as string;
+  const color = formData.get('color') as string;
+
+  if (!name || !icon || !color) {
+    throw new Error('Name, icon, and color are required');
+  }
+
+  // Check if category already exists
+  const existing = await prisma.category.findUnique({
+    where: { name },
+  });
+
+  if (existing) {
+    throw new Error('Category with this name already exists');
+  }
+
+  await prisma.category.create({
+    data: {
+      name,
+      icon,
+      color,
+    },
+  });
+
+  revalidatePath('/dashboard');
+  revalidatePath('/analysis');
 }

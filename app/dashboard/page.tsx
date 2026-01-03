@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { CategoryCard } from '@/components/category-card';
 import { TransactionItem } from '@/components/transaction-item';
 import { AddExpenseDialog } from '@/components/add-expense-dialog';
+import { AddCategoryDialog } from '@/components/add-category-dialog';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -73,6 +74,7 @@ async function DashboardContent() {
         <div>
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-semibold">Quick actions</h2>
+            <AddCategoryDialog />
           </div>
           <div className="grid grid-cols-2 gap-3">
             {categoryTotals.slice(0, 4).map((cat) => (

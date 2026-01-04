@@ -74,12 +74,52 @@ export async function getTotalBalance() {
   return result._sum.amount || 0;
 }
 
-export async function deleteExpense(id: string) {
-  await prisma.expense.delete({
+export async function updateExpense(
+  id: string,
+  data: {
+    amount?: number;
+    description?: string;
+    categoryId?: string;
+    date?: Date;
+  }
+) {
+  const expense = await prisma.expense.update({
     where: { id },
+    data,
+    include: {
+      category: true,
+    },
   });
 
   revalidatePath('/dashboard');
   revalidatePath('/wallet');
   revalidatePath('/analysis');
+  revalidatePath('/categories');
+
+  return expense;
+}
+
+export async function deleteExpense(id: string) {
+  const expense = await prisma.expense.delete({
+    where: { id },
+    include: {
+      category: true,
+    },
+  });
+
+  revalidatePath('/dashboard');
+  revalidatePath('/wallet');
+  revalidatePath('/analysis');
+  revalidatePath('/categories');
+
+  return expense;
+}
+
+export async function getExpenseById(id: string) {
+  return await prisma.expense.findUnique({
+    where: { id },
+    include: {
+      category: true,
+    },
+  });
 }

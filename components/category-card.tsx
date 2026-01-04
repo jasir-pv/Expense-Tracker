@@ -17,7 +17,7 @@ export function CategoryCard({ id, name, icon, color, amount }: CategoryCardProp
   return (
     <Link href={`/wallet/${id}`}>
       <Card
-        className="p-4 cursor-pointer hover:shadow-lg transition-all duration-200 border-none"
+        className="p-4 cursor-pointer hover:shadow-lg transition-all duration-200 border-none dark:bg-gray-800"
         style={{ backgroundColor: color + '15' }}
       >
         <div className="flex items-center gap-3">
@@ -28,8 +28,8 @@ export function CategoryCard({ id, name, icon, color, amount }: CategoryCardProp
             <IconComponent className="w-6 h-6" style={{ color }} />
           </div>
           <div className="flex-1">
-            <p className="text-sm text-muted-foreground mb-1">{name}</p>
-            <p className="text-lg font-bold">{formatCurrency(amount)}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{name}</p>
+            <p className="text-lg font-bold text-gray-900 dark:text-white">{formatCurrency(amount)}</p>
           </div>
         </div>
       </Card>

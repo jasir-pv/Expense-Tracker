@@ -62,7 +62,7 @@ export function NavigationMenu() {
               >
                 <Button
                   variant="ghost"
-                  className="w-full justify-start gap-3 h-12 text-base hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50"
+                  className="w-full justify-start gap-3 h-12 text-base hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-blue-950 dark:hover:to-purple-950"
                 >
                   <Icon className="w-5 h-5" />
                   {item.label}
@@ -74,7 +74,7 @@ export function NavigationMenu() {
         <div className="absolute bottom-6 left-6 right-6">
           <Button
             variant="outline"
-            className="w-full justify-start gap-3 h-12 text-base text-red-600 hover:text-red-700 hover:bg-red-50"
+            className="w-full justify-start gap-3 h-12 text-base text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-950"
           >
             <LogOut className="w-5 h-5" />
             Logout

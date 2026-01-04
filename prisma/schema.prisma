@@ -11,13 +11,14 @@ datasource db {
 
 // Category model - predefined expense categories
 model Category {
-  id        String    @id @default(uuid())
-  name      String    @unique
-  icon      String    // Icon name from lucide-react
-  color     String    // Hex color code
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  expenses  Expense[]
+  id               String            @id @default(uuid())
+  name             String            @unique
+  icon             String            // Icon name from lucide-react
+  color            String            // Hex color code
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  expenses         Expense[]
+  upcomingExpenses UpcomingExpense[]
 
   @@index([name])
 }
@@ -50,4 +51,39 @@ model MonthlySummary {
 
   @@unique([month, year])
   @@index([year, month])
+}
+
+// Upcoming Expense model - planned/recurring expenses
+model UpcomingExpense {
+  id          String                   @id @default(uuid())
+  title       String
+  amount      Float
+  categoryId  String
+  category    Category                 @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  icon        String                   // Icon name from lucide-react
+  color       String                   // Hex color code
+  dueDate     DateTime
+  frequency   UpcomingExpenseFrequency @default(one_time)
+  interval    Int?                     // For custom intervals (e.g., every 2 weeks)
+  status      UpcomingExpenseStatus    @default(pending)
+  autoConvert Boolean                  @default(false)
+  createdAt   DateTime                 @default(now())
+  updatedAt   DateTime                 @updatedAt
+
+  @@index([dueDate])
+  @@index([status])
+  @@index([categoryId])
+}
+
+enum UpcomingExpenseFrequency {
+  one_time
+  weekly
+  monthly
+  yearly
+}
+
+enum UpcomingExpenseStatus {
+  pending
+  paid
+  skipped
 }

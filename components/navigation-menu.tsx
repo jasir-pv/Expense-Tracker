@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, Home, TrendingUp, Wallet, Settings, LogOut } from 'lucide-react';
+import { Menu, Home, TrendingUp, Wallet, Settings, LogOut, CalendarClock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -20,6 +20,11 @@ export function NavigationMenu() {
       icon: Home,
       label: 'Dashboard',
       href: '/dashboard',
+    },
+    {
+      icon: CalendarClock,
+      label: 'Upcoming Expenses',
+      href: '/upcoming',
     },
     {
       icon: TrendingUp,

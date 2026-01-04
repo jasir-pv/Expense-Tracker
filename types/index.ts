@@ -1,4 +1,4 @@
-import { Category, Expense } from '@prisma/client';
+import { Category, Expense, UpcomingExpense, UpcomingExpenseFrequency, UpcomingExpenseStatus } from '@prisma/client';
 
 export type ExpenseWithCategory = Expense & {
   category: Category;
@@ -18,4 +18,22 @@ export type CategorySpending = {
   amount: number;
   color: string;
   percentage: number;
+};
+
+export type UpcomingExpenseWithCategory = UpcomingExpense & {
+  category: Category;
+};
+
+export type { UpcomingExpenseFrequency, UpcomingExpenseStatus };
+
+export type UpcomingExpenseFormData = {
+  title: string;
+  amount: number;
+  categoryId: string;
+  icon: string;
+  color: string;
+  dueDate: Date;
+  frequency: UpcomingExpenseFrequency;
+  interval?: number;
+  autoConvert: boolean;
 };

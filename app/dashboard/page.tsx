@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { CategoryCard } from '@/components/category-card';
 import { TransactionItem } from '@/components/transaction-item';
 import { AddExpenseDialog } from '@/components/add-expense-dialog';
-import { AddCategoryDialog } from '@/components/add-category-dialog';
 import { NavigationMenu } from '@/components/navigation-menu';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { AppShell } from '@/components/app-shell';
@@ -84,10 +83,7 @@ async function DashboardContent() {
 
             {/* Quick Actions */}
             <div>
-              <div className="flex items-center justify-between mb-3">
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Quick actions</h2>
-                <AddCategoryDialog />
-              </div>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Quick actions</h2>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 {categoryTotals.slice(0, 4).map((cat) => (
                   <CategoryCard

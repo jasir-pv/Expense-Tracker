@@ -52,9 +52,14 @@ export function NavigationMenu() {
       </SheetTrigger>
       <SheetContent side="left" className="w-[300px] sm:w-[400px]">
         <SheetHeader>
-          <SheetTitle className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
-            Expense Tracker
-          </SheetTitle>
+          <div className="flex items-center gap-2">
+            <div className="relative w-8 h-8">
+              <img src="/logo.png" alt="Logo" className="w-full h-full object-contain" />
+            </div>
+            <SheetTitle className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+              Expense Tracker
+            </SheetTitle>
+          </div>
         </SheetHeader>
         <div className="mt-8 space-y-2">
           {menuItems.map((item) => {

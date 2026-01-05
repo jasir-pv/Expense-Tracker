@@ -40,7 +40,10 @@ export function DesktopSidebar() {
   return (
     <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 bg-white dark:bg-gray-900 border-r dark:border-gray-800">
       <div className="flex-1 flex flex-col min-h-0">
-        <div className="flex items-center h-16 px-6 border-b dark:border-gray-800">
+        <div className="flex items-center gap-2 h-16 px-6 border-b dark:border-gray-800">
+          <div className="relative w-8 h-8">
+            <img src="/logo.png" alt="Logo" className="w-full h-full object-contain" />
+          </div>
           <h1 className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
             Expense Tracker
           </h1>

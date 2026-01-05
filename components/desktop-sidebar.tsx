@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, TrendingUp, Wallet, Settings, LogOut, CalendarClock } from 'lucide-react';
+import { Home, TrendingUp, Wallet, Settings, LogOut, CalendarClock, Receipt } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -14,6 +14,11 @@ export function DesktopSidebar() {
       icon: Home,
       label: 'Dashboard',
       href: '/dashboard',
+    },
+    {
+      icon: Receipt,
+      label: 'Transactions',
+      href: '/transactions',
     },
     {
       icon: CalendarClock,

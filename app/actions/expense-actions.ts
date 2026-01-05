@@ -25,6 +25,7 @@ export async function createExpense(formData: FormData) {
   revalidatePath('/dashboard');
   revalidatePath('/wallet');
   revalidatePath('/analysis');
+  revalidatePath('/transactions');
 }
 
 export async function getExpenses() {
@@ -122,4 +123,72 @@ export async function getExpenseById(id: string) {
       category: true,
     },
   });
+}
+
+export type TransactionFilters = {
+  dateFilter: 'day' | 'week' | 'month' | 'year';
+  categoryId?: string;
+  search?: string;
+  customDate?: Date;
+};
+
+export async function getFilteredTransactions(filters: TransactionFilters) {
+  const { dateFilter, categoryId, search, customDate } = filters;
+  const now = customDate ? new Date(customDate) : new Date();
+
+  let startDate: Date;
+  let endDate: Date;
+
+  switch (dateFilter) {
+    case 'day':
+      startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+      break;
+    case 'week':
+      const dayOfWeek = now.getDay();
+      const diffToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+      startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() - diffToMonday);
+      endDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 6, 23, 59, 59, 999);
+      break;
+    case 'month':
+      startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+      endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+      break;
+    case 'year':
+      startDate = new Date(now.getFullYear(), 0, 1);
+      endDate = new Date(now.getFullYear(), 11, 31, 23, 59, 59, 999);
+      break;
+  }
+
+  const whereClause: any = {
+    date: {
+      gte: startDate,
+      lte: endDate,
+    },
+  };
+
+  if (categoryId) {
+    whereClause.categoryId = categoryId;
+  }
+
+  if (search) {
+    whereClause.description = {
+      contains: search,
+      mode: 'insensitive',
+    };
+  }
+
+  const transactions = await prisma.expense.findMany({
+    where: whereClause,
+    include: {
+      category: true,
+    },
+    orderBy: {
+      date: 'desc',
+    },
+  });
+
+  const total = transactions.reduce((sum, t) => sum + t.amount, 0);
+
+  return { transactions, total, startDate, endDate };
 }

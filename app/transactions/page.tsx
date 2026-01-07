@@ -57,83 +57,46 @@ async function TransactionsContent({ searchParams }: TransactionsPageProps) {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto p-4 lg:p-6">
-        <div className="lg:grid lg:grid-cols-3 lg:gap-6">
-          {/* Main content */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Total Card */}
-            <Card className="p-6 bg-gradient-to-br from-blue-500 to-purple-600 text-white border-none">
-              <p className="text-sm opacity-90 mb-1">Total for period</p>
-              <h2 className="text-3xl lg:text-4xl font-bold mb-2">{formatCurrency(total)}</h2>
-              <p className="text-sm opacity-75">
-                {formatDate(startDate)} - {formatDate(endDate)}
+      <div className="max-w-7xl mx-auto p-4 lg:p-6 space-y-6">
+        {/* Total Card */}
+        <Card className="p-6 bg-gradient-to-br from-blue-500 to-purple-600 text-white border-none">
+          <p className="text-sm opacity-90 mb-1">Total for period</p>
+          <h2 className="text-3xl lg:text-4xl font-bold mb-2">{formatCurrency(total)}</h2>
+          <p className="text-sm opacity-75">
+            {formatDate(startDate)} - {formatDate(endDate)}
+          </p>
+        </Card>
+
+        {/* Filters */}
+        <Card className="p-4 dark:bg-gray-900 dark:border-gray-800">
+          <TransactionFilters categories={categories} />
+        </Card>
+
+        {/* Transaction List */}
+        <Card className="p-4 dark:bg-gray-900 dark:border-gray-800">
+          <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+            Transactions ({transactions.length})
+          </h2>
+          {transactions.length === 0 ? (
+            <div className="text-center py-8">
+              <Receipt className="w-12 h-12 mx-auto text-gray-400 mb-3" />
+              <p className="text-gray-600 dark:text-gray-400">
+                No transactions found for this period.
               </p>
-            </Card>
-
-            {/* Filters */}
-            <Card className="p-4 dark:bg-gray-900 dark:border-gray-800">
-              <TransactionFilters categories={categories} />
-            </Card>
-
-            {/* Transaction List - Mobile */}
-            <div className="lg:hidden">
-              <Card className="p-4 dark:bg-gray-900 dark:border-gray-800">
-                <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
-                  Transactions ({transactions.length})
-                </h2>
-                {transactions.length === 0 ? (
-                  <div className="text-center py-8">
-                    <Receipt className="w-12 h-12 mx-auto text-gray-400 mb-3" />
-                    <p className="text-gray-600 dark:text-gray-400">
-                      No transactions found for this period.
-                    </p>
-                  </div>
-                ) : (
-                  <div className="divide-y dark:divide-gray-700">
-                    {transactions.map((transaction) => (
-                      <TransactionItem
-                        key={transaction.id}
-                        expense={transaction}
-                        categories={categories}
-                        editable={true}
-                      />
-                    ))}
-                  </div>
-                )}
-              </Card>
             </div>
-          </div>
-
-          {/* Sidebar - Transaction List Desktop */}
-          <div className="hidden lg:block">
-            <div className="sticky top-6">
-              <Card className="p-4 dark:bg-gray-900 dark:border-gray-800 max-h-[calc(100vh-8rem)] overflow-auto">
-                <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white sticky top-0 bg-white dark:bg-gray-900 pb-2">
-                  Transactions ({transactions.length})
-                </h2>
-                {transactions.length === 0 ? (
-                  <div className="text-center py-8">
-                    <Receipt className="w-12 h-12 mx-auto text-gray-400 mb-3" />
-                    <p className="text-gray-600 dark:text-gray-400">
-                      No transactions found.
-                    </p>
-                  </div>
-                ) : (
-                  <div className="divide-y dark:divide-gray-700">
-                    {transactions.map((transaction) => (
-                      <TransactionItem
-                        key={transaction.id}
-                        expense={transaction}
-                        categories={categories}
-                        editable={true}
-                      />
-                    ))}
-                  </div>
-                )}
-              </Card>
+          ) : (
+            <div className="divide-y dark:divide-gray-700">
+              {transactions.map((transaction) => (
+                <TransactionItem
+                  key={transaction.id}
+                  expense={transaction}
+                  categories={categories}
+                  editable={true}
+                />
+              ))}
             </div>
-          </div>
-        </div>
+          )}
+        </Card>
       </div>
     </AppShell>
   );
